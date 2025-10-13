@@ -59,7 +59,9 @@ The ultimate evaluation of this model will not be based on traditional accuracy 
 
 The primary Key Performance Indicator (KPI) will be the **Total Cost of the Predictive Model**, calculated as follows:
 
-Total Cost = (Number of False Positives × $10) + (Number of False Negatives × $500)
+`Total Cost = (Number of False Positives × $10) + (Number of False Negatives × $500)`
+
+The objective of the machine learning project is to train a model that minimizes this **Total Cost**, thereby maximizing the financial value and operational efficiency delivered to Scania's service centers.
 
 # 🚀 Getting Started
 
