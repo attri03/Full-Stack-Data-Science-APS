@@ -1,0 +1,68 @@
+1. Create project template by executing template.py file
+2. Write the code on setup.py and pyproject.toml file to import local packages
+   >> Find more about "setup.py and pyproject.toml" at crashcourse.txt
+3. Create a virtual env, activate it and install the requirements from requirements.txt
+   conda create -n vehicle python=3.10 -y
+   conda activate vehicle
+   add required modules to requirements.txt
+   Do "pip install -r requirements.txt"
+4. Do a "pip list" on terminal to make sure you have local packages installed.
+
+----------------------------------------------- Notebook Setup -----------------------------------------------
+5. Create folder "notebook" >> Add dataset >> Add experiment notebook >> select kernal for notebook (your new env)
+
+-------------------------------------- logging, exception and notebooks --------------------------------------
+6. Write the logger file and test it on demo.py
+7. Write the exception file and test it on demo.py
+
+----------------------------------------------- Data Ingestion -----------------------------------------------
+8. Before we work on "Data Ingestion" component >> Declare variables within constants.__init__.py file >> 
+    Inside "data_access" folder, add code to proj1_data to fetch the data >>
+    add code to entity.config_entity.py file till DataIngestionConfig class >>
+    add code to entity.artifact_entity.py file till DataIngestionArtifact class >>
+    add code to components.data_ingestion.py file >> add code to training pipeline >> 
+    run demo.py (set mongodb connection url first, see next step)
+
+---------------------------- Data Validation, Data Transformation & Model Trainer ----------------------------
+9. Complete the work on utils.main_utils.py and config.schema.yaml file (add entire info about dataset for data validation step)
+10. Now work on the "Data Validation" component the way we did in step 8 for Data Ingestion. (Workflow mentioned below)
+11. Now work on the "Data Transformation" component the way we did in above step. (add estimator.py to entity folder)
+
+23. Before moving to next component of Model Evaluation, some AWS services setup is needed:
+      * Login to AWS console.
+      * Keep region set as - us-east-1
+      * Go to IAM >> Create new user (name: firstproj)
+      * Attach policy >> select AdministratorAccess >> next >> create user
+      * Go to the user >> Security Credentials >> Access Keys >> Create access key
+      * Select CLI >> agree to condition >> next >> Create Access Key >> download csv file
+      * Set env variables with above csv values using below method:
+      ====================================================================================
+         >> Set env var from bash terminal: <<
+         export AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+         export AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+         >> Check env var from bash terminal: <<
+         echo $AWS_ACCESS_KEY_ID
+         echo $AWS_SECRET_ACCESS_KEY
+
+         >> Set env var from powershell terminal: <<
+         $env:AWS_ACCESS_KEY_ID="AWS_ACCESS_KEY_ID"
+         $env:AWS_SECRET_ACCESS_KEY="AWS_SECRET_ACCESS_KEY"
+         >> Check env var from powershell terminal: <<
+         echo $env:AWS_ACCESS_KEY_ID
+         echo $env:AWS_SECRET_ACCESS_KEY
+      ====================================================================================
+      * Now add the access key, secret key, region name to constants.__init__.py
+      * Add code to src.configuration.aws_connection.py file (To work with AWS S3 service)
+      * Ensure below info in constants.__init__.py file:
+            MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+            MODEL_BUCKET_NAME = "my-model-mlopsproj"
+            MODEL_PUSHER_S3_KEY = "model-registry"
+      * Go to S3 service >> Create bucket >> Region: us-east-1 >> General purpose >>
+        Bucket Name: "my-model-mlopsproj" >> uncheck: "Block all public access" and acknowledge >>
+        Hit Create Bucket
+      * Now inside "src.aws_storage" code needs to be added for the configurations needed to pull 
+        and push model from AWS S3 bucket. 
+      * Inside "entity" dir we will have an "s3_estimator.py" file containing all the func to pull/push
+        data from s3 bucket.
+
+24. Now we will start our work on "Model Evaluation" and "Model Pusher" component.
