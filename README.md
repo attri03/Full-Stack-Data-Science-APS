@@ -26,24 +26,61 @@ The total cost of the predictive model to the company will be given by:
 
 `Total_cost = 10 * occurances_of_cost1 + 500 * occurances_of_cost2`
 
-# Run Project
+# 🚀 Getting Started
 
-1. Clone the github repository
-eg: git clone https://github.com/attri03/Full-Stack-Data-Science-APS.git
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing.
 
-2. (Optional) Virtual environment in the terminal
-A. Create virtual enviroment
-eg: conda create -n APSSensor python=3.10 -y
-B. Activate virtual environment in the terminal
-eg: conda activate APSSensor
+## Prerequisites
 
-3. Use your environment vaiables:
-$env:AWS_REGION_NAME=""
-$env:AWS_SECRET_ACCESS_KEY="
-$env:AWS_ACCESS_KEY_ID=""
+*   Python 3.10+
+*   Conda or another virtual environment manager
+*   An AWS account with configured IAM credentials
 
-4. Install requirements.txt
-eg: pip install -r requirements.txt
+## Installation and Setup
 
-5. Run demo.py in the terminal
-eg: python demo.py
+1.  **Clone the Repository**
+    Open your terminal and clone the project repository:
+    ```bash
+    git clone https://github.com/attri03/Full-Stack-Data-Science-APS.git
+    cd Full-Stack-Data-Science-APS
+    ```
+
+2.  **Create and Activate a Virtual Environment**
+    It is highly recommended to use a virtual environment to manage project dependencies.
+    ```bash
+    # Create the conda environment
+    conda create -n APSSensor python=3.10 -y
+
+    # Activate the environment
+    conda activate APSSensor
+    ```
+
+3.  **Configure Environment Variables**
+    This project requires AWS credentials to access resources. Set the following environment variables in your terminal session.
+
+    **For Windows (PowerShell):**
+    ```powershell
+    $env:AWS_REGION_NAME="your-aws-region"
+    $env:AWS_SECRET_ACCESS_KEY="your-secret-access-key"
+    $env:AWS_ACCESS_KEY_ID="your-access-key-id"
+    ```
+    **For macOS/Linux:**
+    ```bash
+    export AWS_REGION_NAME="your-aws-region"
+    export AWS_SECRET_ACCESS_KEY="your-secret-access-key"
+    export AWS_ACCESS_KEY_ID="your-access-key-id"
+    ```    
+    > **Note:** For a more permanent and secure solution, consider using a `.env` file.
+
+4.  **Install Required Dependencies**
+    Install all the necessary packages listed in `requirements.txt`:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Running the Application
+
+Once the setup is complete, you can run the main application pipeline:
+
+```bash
+python demo.py
