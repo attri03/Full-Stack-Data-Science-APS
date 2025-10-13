@@ -59,7 +59,7 @@ The ultimate evaluation of this model will not be based on traditional accuracy 
 
 The primary Key Performance Indicator (KPI) will be the **Total Cost of the Predictive Model**, calculated as follows:
 
-`Total_cost = 10 * occurances_of_cost1 + 500 * occurances_of_cost2`
+Total Cost = (Number of False Positives × $10) + (Number of False Negatives × $500)
 
 # 🚀 Getting Started
 
