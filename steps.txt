@@ -1,3 +1,0 @@
-1. Create environment
-2. install requirement.txt
-3. access key env variable and secret key env variable
