@@ -1,3 +1,4 @@
+artifact
 config
 logs
 notebook

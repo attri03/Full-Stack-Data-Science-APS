@@ -49,11 +49,12 @@ model_n_estimators: int = 300
 #####################################################
 
 ############## Model Evaluation Constants ##############
-AWS_ACCESS_KEY_ID_ENV_KEY: str = "AWS_ACCESS_KEY"
-AWS_SECRET_ACCESS_KEY_ENV_KEY: str = "AWS_SECRET_KEY"
+AWS_ACCESS_KEY_ID_ENV_KEY: str = "AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY_ENV_KEY: str = "AWS_SECRET_ACCESS_KEY"
 REGION_NAME: str = "AWS_REGION_NAME"
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_BUCKET_NAME: str = "personal-proj-aps-sensor-project"
 MODEL_PUSHER_S3_KEY: str = "model-registry"
 MODEL_FILE_NAME: str = "model.pkl"
+output_column_name = "class"
 #####################################################

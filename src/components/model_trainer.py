@@ -58,6 +58,7 @@ class ModelTrainer:
             recall = recall_score(y_test, y_pred)
             logging.info("Completed : Evaluating the model")
 
+            # Prepare metric artifact
             metric_artifact = ClassificationMetricArtifact(
                                     total_cost = total_cost,
                                     f1_score = f1,

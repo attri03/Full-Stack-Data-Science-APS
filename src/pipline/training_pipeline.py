@@ -6,8 +6,11 @@ from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
 from src.components.model_trainer import ModelTrainer
-from src.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
-from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact
+from src.components.model_evaluation import ModelEvaluation
+from src.components.model_pusher import ModelPusher
+from src.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvaluationConfig, ModelPusherConfig
+from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact, ModelEvaluationArtifact, ModelPusherArtifact
+import os
 
 class TrainPipeline:
 
@@ -17,6 +20,8 @@ class TrainPipeline:
             self.data_validation_config = DataValidationConfig()
             self.data_transformation_config = DataTransformationConfig()
             self.model_training_config = ModelTrainerConfig()
+            self.model_evaluation_config = ModelEvaluationConfig()
+            self.model_pusher_config = ModelPusherConfig()
         except Exception as e:
             raise MyException(e, sys)
     
@@ -81,6 +86,42 @@ class TrainPipeline:
             return model_trainer_artifact
         except Exception as e:
             raise MyException(e, sys)
+        
+    def start_model_evaluation(self,
+                               data_ingestion_Artifact: DataIngestionArtifact,
+                               model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
+        """
+        This method of TrainPipeline class is responsible for starting model evaluation component
+        """
+        try:
+            logging.info("Entered the model evaluation method")
+            model_evaluation = ModelEvaluation(
+                data_ingestion_Artifact=data_ingestion_Artifact,
+                model_trainer_artifact=model_trainer_artifact,
+                model_eval_config=self.model_evaluation_config
+            )
+            model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+            logging.info("Exited the model evaluation method")
+            return model_evaluation_artifact
+        except Exception as e:
+            raise MyException(e, sys)
+        
+    def start_model_pusher(self,
+                            model_evaluation_artifact: ModelEvaluationArtifact) -> ModelPusherArtifact:
+        """
+        This method of TrainPipeline class is responsible for starting model evaluation component
+        """
+        try:
+            logging.info("Entered the model Pusher method")
+            model_pusher = ModelPusher(
+                model_pusher_config = self.model_evaluation_config,
+                model_evaluation_artifact = model_evaluation_artifact
+            )
+            model_pusher_artifact = model_pusher.initiate_model_push()
+            logging.info("Exited the model pusher method")
+            return model_pusher_artifact
+        except Exception as e:
+            raise MyException(e, sys)
 
     def run_pipeline(self, ) -> None:
         """
@@ -92,6 +133,9 @@ class TrainPipeline:
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact)
             data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact, data_validation_artifact)
             model_trainer_artifact = self.start_model_training(data_transformation_artifact)
+            model_evaluation_artifact = self.start_model_evaluation(data_ingestion_artifact, model_trainer_artifact)
+            if model_evaluation_artifact.is_model_accepted:
+                model_pusher_artifact = self.start_model_pusher(model_evaluation_artifact)
             logging.info("Completed the training pipeline")
         except Exception as e:
             raise MyException(e, sys)

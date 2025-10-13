@@ -26,5 +26,24 @@ The total cost of the predictive model to the company will be given by:
 
 `Total_cost = 10 * occurances_of_cost1 + 500 * occurances_of_cost2`
 
-# Project Flow
+# Run Project
 
+1. Clone the github repository
+eg: git clone https://github.com/attri03/Full-Stack-Data-Science-APS.git
+
+2. (Optional) Virtual environment in the terminal
+A. Create virtual enviroment
+eg: conda create -n APSSensor python=3.10 -y
+B. Activate virtual environment in the terminal
+eg: conda activate APSSensor
+
+3. Use your environment vaiables:
+$env:AWS_REGION_NAME=""
+$env:AWS_SECRET_ACCESS_KEY="
+$env:AWS_ACCESS_KEY_ID=""
+
+4. Install requirements.txt
+eg: pip install -r requirements.txt
+
+5. Run demo.py in the terminal
+eg: python demo.py
