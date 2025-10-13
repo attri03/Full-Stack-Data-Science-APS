@@ -1,28 +1,63 @@
-# Business Case Study
+# Business Case Study: Predictive Maintenance for Scania's Air Pressure System (APS)
 
-## Overview of the Scania Service station Anomaly detection mechanism
-Scania, is a big Automotive which build state-of-the-art trucks for logistics. Scania truck has a lot of embedded technology for tracking the performance and detecting anomalies in the truck. There are many sensors in the truck. These sensors provide the time-series data to keep the track of the vehicle performance as well as detecting any anomaly in the truck. The key insights from the vast time-series data is stored in the black box of the vehicle. When the truck is bought to the service center, these key insights are sent to the service PC's through CAN from black-box. The service PC's run a lot of ML models in them for detecting anomalies in the system.
+### **1. Executive Summary**
 
-## APS fault through sensors and current methodology
-One of the major fault that needs to be tackled by the service people is APS fault. APS plays a pivotal role in braking system's of the truck. It is crucial to find the faults in APS system and solve it before they go bad. Therefore, everytime the truck comes to the service center, service people open up the mechnical aspect and check wheter there was an issue with the APS or not. This process is time consuming and cost inefficient. Therefore, Scania needs a predictive model, which with the help of data that is stored in the black-box can predict whether there is APS fault issue or not. This method will solve both time-complexity as well as cost-efficiency.
+Scania, a leader in the automotive industry, currently employs a manual, time-consuming, and cost-inefficient process for detecting critical faults in truck Air Pressure Systems (APS). This reactive approach leads to significant service costs and vehicle downtime. This document proposes the development of a predictive machine learning model that leverages existing sensor data from the vehicle's "black box" to proactively identify APS faults. The primary business driver is cost reduction, specifically by minimizing the high cost of missed detections (**False Negatives**), which are **50 times more expensive** than unnecessary checks (**False Positives**). The success of this initiative will be measured by a single, clear metric: the total cost incurred from prediction errors.
 
-## Data for predicting the APS Fault
-Domain experts found out that, when the truck is bought to the service center, there are some readings in the sensor that directly or indirectly tells APS fault. These readings are nothing but the senor readings at the time when service of the vehicle is yet to start. They collected the data from 36000+ Scania trucks and classified the data into 2 classes `pos` and `neg`.
+---
 
-- `pos` : There is APS fault.
-- `neg` : There is no APS fault.
+### **2. The Business Opportunity: From Reactive to Predictive Maintenance**
 
-This  data has the capability of predicting the APS fault with high accuracy.
+Scania's state-of-the-art trucks are equipped with numerous sensors that generate vast amounts of time-series data, tracking vehicle performance and health. This data is logged in the vehicle's black box and downloaded at service centers. While this data is rich with insights, its potential to pre-emptively identify mechanical failures remains largely untapped.
 
-## Business cost of the predictive model
-There are primarily 2 costs associated with the predictive model. 
-1. `cost 1` : If our model suggests that there is fault in the APS but in reality there was no fault. The total cost incurred by the company to check the APS sensor is 10 dollars. This is known as `False Positive`.
-2. `cost 2` : If our model suggests that there is no fault in the APS but in reality there was a fault. The total cost incurred by the company is 500 dollars. This is known as `False Negative`.
+The current methodology for diagnosing faults in the Air Pressure System (APS)—a pivotal component of the truck's braking system—is a prime example of this inefficiency.
 
-So, `False Negative` is 50 times more harmful then `False Positive`. 
+**The Core Problem:**
+Every time a truck enters a service center, technicians must manually inspect the APS components to check for faults. This process is mandatory due to the critical safety nature of the braking system, but it is inherently flawed:
+*   **Time-Consuming:** Manual inspection creates a significant bottleneck in the service workflow.
+*   **Cost-Inefficient:** Labor and resources are spent inspecting healthy systems, adding unnecessary operational costs.
+*   **Reactive, Not Proactive:** Faults are only discovered after they have potentially developed, not before.
 
-## Evaluation Metrics 
-The total cost of the predictive model to the company will be given by:
+> This project aims to transform this manual, reactive process into an automated, predictive one, saving both time and money while enhancing service quality.
+
+---
+
+### **3. The Proposed Solution: An ML-Powered Diagnostic Tool**
+
+We will develop a predictive model that uses sensor readings collected at the service center to accurately classify whether a truck has an APS fault. By integrating this model into the service PC's diagnostic workflow, Scania can achieve a smarter, data-driven approach to maintenance.
+
+**Data Foundation:**
+The model will be trained on a robust dataset collected from over **36,000 Scania trucks**. This dataset has been pre-classified by domain experts into two distinct categories:
+*   **`pos` (Positive Class):** The truck has a confirmed APS fault.
+*   **`neg` (Negative Class):** The truck's APS is functioning correctly.
+
+This high-quality dataset provides a strong foundation for building a model capable of predicting APS faults with high accuracy.
+
+---
+
+### **4. Financial Impact: The Business Cost of Prediction**
+
+To build an effective model, we must align its performance with tangible business outcomes. The financial implications of our model's predictions are clear and quantifiable.
+
+There are two primary costs associated with any prediction error:
+
+*   **Cost 1: False Positive (`$10`)**
+    *   **Scenario:** The model predicts an APS fault, but in reality, none exists.
+    *   **Business Impact:** The service team performs an unnecessary manual inspection, incurring a nominal cost of **$10**.
+
+*   **Cost 2: False Negative (`$500`)**
+    *   **Scenario:** The model fails to detect a genuine APS fault.
+    *   **Business Impact:** A truck with a faulty braking system leaves the service center. This could lead to critical failures on the road, resulting in extensive repairs, potential accidents, and damage to brand reputation. The estimated cost for such an event is **$500**.
+
+> **Key Insight:** A False Negative is **50 times more costly and damaging** to the business than a False Positive. Therefore, the model must be aggressively optimized to minimize missed detections.
+
+---
+
+### **5. Success Metric: The Total Cost Formula**
+
+The ultimate evaluation of this model will not be based on traditional accuracy metrics alone, but on a cost-centric formula that directly reflects its financial impact on the company.
+
+The primary Key Performance Indicator (KPI) will be the **Total Cost of the Predictive Model**, calculated as follows:
 
 `Total_cost = 10 * occurances_of_cost1 + 500 * occurances_of_cost2`
 
