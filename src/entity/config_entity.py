@@ -65,3 +65,9 @@ class ModelEvaluationConfig:
 class ModelPusherConfig:
     bucket_name: str = MODEL_BUCKET_NAME
     s3_model_key_path: str = MODEL_FILE_NAME
+
+@dataclass
+class APSSensorPredictorConfig:
+    bucket_name: str = MODEL_BUCKET_NAME
+    s3_model_key_path: str = MODEL_FILE_NAME
+    SCHEMA_FILE_PATH: str = os.path.join(schema_folder_name, schema_file_name)
