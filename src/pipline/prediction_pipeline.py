@@ -11,12 +11,13 @@ class APSSensorDataFrame:
 
     def __init__(self, dictionary:dict):
         try:
+            logging.info("Setting up clean data for the pediction")
             self.APSSensor_predictor_config = APSSensorPredictorConfig()
             self.schema_info = read_yaml_file(self.APSSensor_predictor_config.SCHEMA_FILE_PATH)
             self.data_dict = dictionary
         except Exception as e:
             raise MyException(e, sys)
-        
+    
     def dropping_unwanted_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         try:
             to_delete_columns = self.schema_info["to_delete_columns"]
@@ -36,6 +37,7 @@ class APSSensorDataFrame:
         try:
             df = self.dictionary_to_dataframe(self.data_dict)
             df = self.dropping_unwanted_columns(df)
+            logging.info("Cleaned data setted up")
             return df
         except Exception as e:
             raise MyException(e, sys)
@@ -55,6 +57,7 @@ class APSSensorPredictor:
                 model_path=self.APSSensor_predictor_config.s3_model_key_path,
             )
             result =  model.predict(df)
+            logging.info(f"Model results : {result}")
             
             return result
         

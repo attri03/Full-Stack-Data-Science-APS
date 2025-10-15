@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        {% if prediction %}
+        <div class="result">
+            <h2>Prediction</h2>
+            <p>Is there APS Sensor fault: {{ prediction }}</p>
+        </div>
+        {% elif error %}
+        <div class="result error">
+            <h2>Error</h2>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+        <div class="button-container">
+            <button onclick="window.location.href='/'">Go Back</button>
+        </div>
+    </div>
+</body>
+</html>

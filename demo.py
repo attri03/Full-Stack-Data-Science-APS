@@ -7,6 +7,17 @@ if __name__ == "__main__":
     obj = TrainPipeline()
     obj.run_pipeline()
 
+
+
+
+
+
+
+
+
+
+
+
 #Prediction Pipeline Demo (Run Training pipeline atleast once before predictions.)
 # if __name__ == "__main__":
 #     dataframe = pd.read_csv("artifact/10_14_2025_16_52_42/data_ingestion/processed_data/test_data.csv")

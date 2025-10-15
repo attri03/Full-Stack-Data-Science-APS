@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APS Sensor Failure Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>APS Sensor Failure Prediction</h1>
+        <form id="prediction-form" action="/predict" method="post" enctype="multipart/form-data">
+            <div class="upload-box">
+                <input type="file" id="file" name="file" accept=".json">
+                <label for="file">Choose a JSON file</label>
+                <span id="file-name"></span>
+            </div>
+            <div class="button-container">
+                <button type="submit" id="predict-btn">Predict</button>
+                <button type="button" id="reset-btn" onclick="window.location.href='/'">Reset</button>
+                <div class="loader" id="loader"></div>
+            </div>
+        </form>
+        <div class="loader-overlay" id="loader-overlay"></div>
+        {% if prediction %}
+        <div class="result">
+            <h2>Prediction</h2>
+            <p>Is there APS Sensor fault: {{ prediction }}</p>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        const fileInput = document.getElementById('file');
+        const fileName = document.getElementById('file-name');
+        const predictBtn = document.getElementById('predict-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const form = document.getElementById('prediction-form');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+            } else {
+                fileName.textContent = '';
+            }
+        });
+
+        const predictionResult = document.querySelector('.result');
+
+        if (predictionResult) {
+            fileInput.disabled = true;
+            predictBtn.disabled = true;
+            resetBtn.disabled = false;
+            document.querySelector('.upload-box label').style.cursor = 'not-allowed';
+            document.querySelector('.upload-box').style.cursor = 'not-allowed';
+        } else {
+            resetBtn.disabled = true;
+        }
+
+        form.addEventListener('submit', (event) => {
+            if (fileInput.files.length === 0) {
+                event.preventDefault();
+                alert('Please select a file to predict.');
+                return;
+            }
+            predictBtn.disabled = true;
+            predictBtn.textContent = 'Predicting...';
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('loader-overlay').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
