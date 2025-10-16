@@ -58,3 +58,6 @@ MODEL_PUSHER_S3_KEY: str = "model-registry"
 MODEL_FILE_NAME: str = "model.pkl"
 output_column_name = "class"
 #####################################################
+
+APP_HOST = "0.0.0.0"
+APP_PORT = 5000

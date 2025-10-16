@@ -6,7 +6,7 @@ import uvicorn
 import json
 import os
 import shutil
-
+from src.constants import APP_HOST, APP_PORT
 from src.pipline.prediction_pipeline import APSSensorDataFrame
 from src.pipline.prediction_pipeline import APSSensorPredictor
 
@@ -55,4 +55,4 @@ async def predict(request: Request, file: UploadFile = File(...)):
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    uvicorn.run(app, host=APP_HOST, port=APP_PORT)
