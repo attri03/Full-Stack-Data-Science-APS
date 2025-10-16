@@ -17,7 +17,6 @@
             </div>
             <div class="button-container">
                 <button type="submit" id="predict-btn">Predict</button>
-                <button type="button" id="reset-btn" onclick="window.location.href='/'">Reset</button>
                 <div class="loader" id="loader"></div>
             </div>
         </form>
@@ -33,8 +32,15 @@
         const fileInput = document.getElementById('file');
         const fileName = document.getElementById('file-name');
         const predictBtn = document.getElementById('predict-btn');
-        const resetBtn = document.getElementById('reset-btn');
         const form = document.getElementById('prediction-form');
+        const uploadBox = document.querySelector('.upload-box');
+
+        // Trigger file input when upload box is clicked
+        uploadBox.addEventListener('click', () => {
+            if (!fileInput.disabled) {
+                fileInput.click();
+            }
+        });
 
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
@@ -50,11 +56,8 @@
         if (predictionResult) {
             fileInput.disabled = true;
             predictBtn.disabled = true;
-            resetBtn.disabled = false;
             document.querySelector('.upload-box label').style.cursor = 'not-allowed';
-            document.querySelector('.upload-box').style.cursor = 'not-allowed';
-        } else {
-            resetBtn.disabled = true;
+            uploadBox.style.cursor = 'not-allowed';
         }
 
         form.addEventListener('submit', (event) => {
